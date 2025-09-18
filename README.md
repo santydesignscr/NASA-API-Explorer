@@ -142,11 +142,11 @@ nasa-api-explorer/
 
 ## 📄 Licencia
 
-Este proyecto está bajo la Licencia MIT. Ver el archivo [LICENSE](LICENSE) para más detalles.
+Este proyecto está bajo la Licencia GNU GPL-3.0.
 
 ## 👨‍💻 Autor
 
-**Tu Nombre**
+**Santiago Rodríguez**
 - GitHub: [@santydesignscr](https://github.com/santydesignscr)
 - Portfolio: [bytewave.webcr.top](https://bytewave.webcr.top)
 
