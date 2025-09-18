@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NASA API Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'nasa-blue': '#0B3D91',
+                        'nasa-red': '#FF4136'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .loading-spinner {
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+    <!-- Header -->
+    <header class="bg-nasa-blue shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <h1 class="text-3xl font-bold text-center">NASA API Explorer</h1>
+            <p class="text-center text-blue-200 mt-2">Explora el universo con las APIs públicas de la NASA</p>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="bg-gray-800 border-b border-gray-700">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-wrap justify-center space-x-4 py-4">
+                <button id="apod-tab" class="nav-btn bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition-colors active">
+                    Imagen del Día
+                </button>
+                <button id="asteroids-tab" class="nav-btn bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded-lg transition-colors">
+                    Asteroides
+                </button>
+                <button id="mars-tab" class="nav-btn bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded-lg transition-colors">
+                    Fotos de Marte
+                </button>
+                <button id="earth-tab" class="nav-btn bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded-lg transition-colors">
+                    EPIC Earth
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Loading Indicator -->
+        <div id="loading" class="hidden text-center py-8">
+            <div class="loading-spinner w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full mx-auto"></div>
+            <p class="mt-4 text-gray-400">Cargando datos de la NASA...</p>
+        </div>
+
+        <!-- Error Message -->
+        <div id="error-message" class="hidden bg-red-600 border border-red-400 text-white px-4 py-3 rounded mb-6">
+            <strong>Error:</strong>
+            <span id="error-text"></span>
+        </div>
+
+        <!-- APOD Section -->
+        <section id="apod-section" class="content-section">
+            <div class="bg-gray-800 rounded-lg p-6 shadow-lg">
+                <h2 class="text-2xl font-bold mb-4">Astronomy Picture of the Day (APOD)</h2>
+                <div class="mb-4 flex flex-wrap items-end gap-4">
+                    <div class="flex-1 min-w-48">
+                        <label for="apod-date" class="block text-sm font-medium mb-2">Seleccionar fecha:</label>
+                        <input type="date" id="apod-date" class="bg-gray-700 border border-gray-600 text-white px-3 py-2 rounded-lg w-full">
+                    </div>
+                    <div class="flex gap-2">
+                        <button id="get-apod" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition-colors">
+                            📸 Obtener Imagen
+                        </button>
+                        <button id="retry-apod" class="hidden bg-orange-600 hover:bg-orange-700 px-4 py-2 rounded-lg transition-colors">
+                            🔄 Reintentar
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Información de conexión -->
+                <div id="apod-connection-info" class="hidden mb-4 p-3 bg-yellow-600 rounded-lg text-sm">
+                    <p>💡 <strong>Problemas de carga?</strong> Las imágenes de alta resolución pueden tardar en cargar. Si persiste el problema, verifica tu conexión a internet.</p>
+                </div>
+                
+                <div id="apod-content" class="mt-6"></div>
+            </div>
+        </section>
+
+        <!-- Asteroids Section -->
+        <section id="asteroids-section" class="content-section hidden">
+            <div class="bg-gray-800 rounded-lg p-6 shadow-lg">
+                <h2 class="text-2xl font-bold mb-4">Near Earth Object Web Service (Asteroides)</h2>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                    <div>
+                        <label for="start-date" class="block text-sm font-medium mb-2">Fecha inicio:</label>
+                        <input type="date" id="start-date" class="bg-gray-700 border border-gray-600 text-white px-3 py-2 rounded-lg w-full">
+                    </div>
+                    <div>
+                        <label for="end-date" class="block text-sm font-medium mb-2">Fecha fin:</label>
+                        <input type="date" id="end-date" class="bg-gray-700 border border-gray-600 text-white px-3 py-2 rounded-lg w-full">
+                    </div>
+                    <div>
+                        <label for="asteroids-per-page" class="block text-sm font-medium mb-2">Por página:</label>
+                        <select id="asteroids-per-page" class="bg-gray-700 border border-gray-600 text-white px-3 py-2 rounded-lg w-full">
+                            <option value="5">5 asteroides</option>
+                            <option value="10" selected>10 asteroides</option>
+                            <option value="20">20 asteroides</option>
+                            <option value="50">50 asteroides</option>
+                        </select>
+                    </div>
+                    <div class="flex items-end">
+                        <button id="get-asteroids" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg w-full transition-colors">
+                            Buscar Asteroides
+                        </button>
+                    </div>
+                </div>
+                <div id="asteroids-content" class="mt-6"></div>
+            </div>
+        </section>
+
+        <!-- Mars Rover Photos Section -->
+        <section id="mars-section" class="content-section hidden">
+            <div class="bg-gray-800 rounded-lg p-6 shadow-lg">
+                <h2 class="text-2xl font-bold mb-4">Mars Rover Photos</h2>
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-4">
+                    <div>
+                        <label for="rover-select" class="block text-sm font-medium mb-2">Rover:</label>
+                        <select id="rover-select" class="bg-gray-700 border border-gray-600 text-white px-3 py-2 rounded-lg w-full">
+                            <option value="curiosity">Curiosity</option>
+                            <option value="perseverance">Perseverance</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="sol-input" class="block text-sm font-medium mb-2">Sol (día marciano):</label>
+                        <input type="number" id="sol-input" value="1000" min="1" class="bg-gray-700 border border-gray-600 text-white px-3 py-2 rounded-lg w-full">
+                    </div>
+                    <div>
+                        <label for="camera-select" class="block text-sm font-medium mb-2">Cámara:</label>
+                        <select id="camera-select" class="bg-gray-700 border border-gray-600 text-white px-3 py-2 rounded-lg w-full">
+                            <option value="">Todas</option>
+                            <option value="FHAZ">Front Hazard</option>
+                            <option value="RHAZ">Rear Hazard</option>
+                            <option value="MAST">Mast Camera</option>
+                            <option value="CHEMCAM">ChemCam</option>
+                            <option value="MAHLI">MAHLI</option>
+                            <option value="MARDI">MARDI</option>
+                            <option value="NAVCAM">Navigation</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="photos-per-page" class="block text-sm font-medium mb-2">Por página:</label>
+                        <select id="photos-per-page" class="bg-gray-700 border border-gray-600 text-white px-3 py-2 rounded-lg w-full">
+                            <option value="6">6 fotos</option>
+                            <option value="12" selected>12 fotos</option>
+                            <option value="24">24 fotos</option>
+                            <option value="36">36 fotos</option>
+                        </select>
+                    </div>
+                    <div class="flex items-end">
+                        <button id="get-mars-photos" class="bg-orange-600 hover:bg-orange-700 px-4 py-2 rounded-lg w-full transition-colors">
+                            Buscar Fotos
+                        </button>
+                    </div>
+                </div>
+                <div id="mars-content" class="mt-6"></div>
+            </div>
+        </section>
+
+        <!-- EPIC Earth Images Section -->
+        <section id="earth-section" class="content-section hidden">
+            <div class="bg-gray-800 rounded-lg p-6 shadow-lg">
+                <h2 class="text-2xl font-bold mb-4">EPIC - Imágenes de la Tierra</h2>
+                <div class="bg-blue-900/20 border border-blue-600 rounded-lg p-4 mb-6">
+                    <p class="text-blue-200 text-sm leading-relaxed">
+                        <strong>EPIC (Earth Polychromatic Imaging Camera)</strong> captura imágenes espectaculares de la Tierra 
+                        completamente iluminada desde el punto Lagrange L1, mostrando fenómenos únicos como eclipses lunares 
+                        y la rotación terrestre. Las imágenes están disponibles desde 2015.
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label for="earth-date" class="block text-sm font-medium mb-2">📅 Selecciona una fecha:</label>
+                        <input type="date" id="earth-date" 
+                               min="2015-06-13" 
+                               class="bg-gray-700 border border-gray-600 text-white px-3 py-2 rounded-lg w-full">
+                        <p class="text-xs text-gray-400 mt-1">Disponible desde junio 2015</p>
+                    </div>
+                    <div class="flex items-end">
+                        <button id="get-earth-image" class="bg-green-600 hover:bg-green-700 px-6 py-3 rounded-lg w-full transition-colors font-medium">
+                            🚀 Obtener Imágenes EPIC
+                        </button>
+                    </div>
+                </div>
+                <div id="earth-content" class="mt-6"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 border-t border-gray-700 mt-12">
+        <div class="container mx-auto px-4 py-6 text-center text-gray-400">
+            <p>Datos proporcionados por las APIs públicas de la NASA</p>
+            <p class="text-sm mt-2">© 2025 NASA API Explorer</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

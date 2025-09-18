@@ -1,0 +1,582 @@
+/* Custom CSS para NASA API Explorer */
+
+/* Variables CSS para colores personalizados */
+:root {
+    --nasa-blue: #0B3D91;
+    --nasa-red: #FF4136;
+    --space-dark: #0a0a0a;
+    --space-gray: #1a1a1a;
+}
+
+/* Estilos para el cuerpo principal */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+    min-height: 100vh;
+}
+
+/* Animaciones personalizadas */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* Aplicar animaciones a las secciones */
+.content-section {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Estilos para las tarjetas */
+.bg-gray-800 {
+    backdrop-filter: blur(10px);
+    background-color: rgba(31, 41, 55, 0.9);
+    border: 1px solid rgba(75, 85, 99, 0.3);
+}
+
+.bg-gray-700 {
+    background-color: rgba(55, 65, 81, 0.8);
+    border: 1px solid rgba(107, 114, 128, 0.2);
+}
+
+/* Estilos para botones con efectos hover mejorados */
+.nav-btn {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+}
+
+.nav-btn.active {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+}
+
+/* Efectos para los botones de API */
+button:not(.nav-btn) {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+button:not(.nav-btn):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+button:not(.nav-btn):active {
+    transform: translateY(0);
+}
+
+/* Estilos para inputs con efectos focus */
+input, select {
+    transition: all 0.3s ease;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: #60A5FA;
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+    transform: scale(1.02);
+}
+
+/* Estilos para las imágenes */
+img {
+    transition: transform 0.3s ease;
+}
+
+img:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+/* Estilos para el spinner de carga */
+.loading-spinner {
+    border-color: #60A5FA;
+    border-top-color: transparent;
+}
+
+/* Efectos para las tarjetas de asteroides */
+.bg-gray-700:hover {
+    background-color: rgba(75, 85, 99, 0.9);
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}
+
+/* Estilos para el scrollbar personalizado */
+.overflow-y-auto::-webkit-scrollbar {
+    width: 8px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-track {
+    background: rgba(55, 65, 81, 0.5);
+    border-radius: 4px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb {
+    background: rgba(107, 114, 128, 0.8);
+    border-radius: 4px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+    background: rgba(156, 163, 175, 0.8);
+}
+
+/* Efectos para enlaces */
+a {
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Estilos responsivos adicionales */
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .nav-btn {
+        margin-bottom: 0.5rem;
+        width: 100%;
+    }
+    
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
+
+/* Efectos para elementos potencialmente peligrosos */
+.border-red-500 {
+    animation: pulse 2s infinite;
+}
+
+/* Estilos para el header con gradiente */
+header {
+    background: linear-gradient(135deg, var(--nasa-blue) 0%, #1e40af 100%);
+    position: relative;
+}
+
+header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="1" fill="white" opacity="0.1"/><circle cx="80" cy="40" r="1" fill="white" opacity="0.1"/><circle cx="40" cy="70" r="1" fill="white" opacity="0.1"/><circle cx="90" cy="90" r="1" fill="white" opacity="0.1"/><circle cx="10" cy="80" r="1" fill="white" opacity="0.1"/></svg>');
+    pointer-events: none;
+}
+
+/* Estilo para el footer */
+footer {
+    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+}
+
+/* Efectos para las tarjetas de fotos de Marte */
+.grid > div {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.grid > div:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+/* Estilos para mensajes de error mejorados */
+#error-message {
+    animation: slideIn 0.5s ease-out;
+    border-left: 4px solid #DC2626;
+}
+
+/* Efectos de entrada para el contenido */
+#apod-content, #asteroids-content, #mars-content, #earth-content {
+    animation: fadeIn 0.6s ease-out;
+}
+
+/* Estilos para tooltips mejorados */
+[title] {
+    position: relative;
+}
+
+/* Mejoras visuales para dispositivos móviles */
+@media (max-width: 640px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+    
+    h2 {
+        font-size: 1.25rem;
+    }
+    
+    .text-3xl {
+        font-size: 1.5rem;
+    }
+    
+    .text-2xl {
+        font-size: 1.25rem;
+    }
+}
+
+/* Estilos para indicadores de estado */
+.status-indicator {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.status-safe {
+    background-color: #10B981;
+}
+
+.status-danger {
+    background-color: #EF4444;
+    animation: pulse 1.5s infinite;
+}
+
+/* Efectos de glassmorphism para las secciones principales */
+.content-section > div {
+    backdrop-filter: blur(16px);
+    background: rgba(31, 41, 55, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Animación para elementos que aparecen */
+.fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+}
+
+.slide-in {
+    animation: slideIn 0.6s ease-out forwards;
+}
+
+/* Estilos para los controles de paginación */
+.pagination-controls {
+    user-select: none;
+}
+
+.pagination-controls button {
+    min-width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+}
+
+.pagination-controls button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    transform: none !important;
+}
+
+.pagination-controls button:not(:disabled):hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.pagination-controls .bg-blue-600 {
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+/* Efectos de carga para elementos paginados */
+.pagination-loading {
+    opacity: 0.6;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+/* Animaciones para cambio de página */
+@keyframes pageChange {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.page-content {
+    animation: pageChange 0.4s ease-out;
+}
+
+/* Mejoras responsivas para paginación */
+@media (max-width: 640px) {
+    .pagination-controls {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+    
+    .pagination-controls button {
+        min-width: 36px;
+        height: 36px;
+        font-size: 0.875rem;
+    }
+    
+    .pagination-controls > div {
+        order: -1;
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* Estilos para la carga de imágenes APOD */
+.apod-image-container {
+    position: relative;
+    min-height: 384px; /* min-h-96 equivalente */
+    background: linear-gradient(45deg, #374151, #4B5563);
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+/* Asegurar que los contenedores de carga tengan altura suficiente */
+.apod-loading-container {
+    min-height: 384px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Mejoras para el indicador de carga APOD */
+.apod-loading-spinner {
+    width: 4rem;
+    height: 4rem;
+    border: 4px solid #60A5FA;
+    border-top: 4px solid transparent;
+    border-radius: 50%;
+    animation: spin 1.2s linear infinite;
+}
+
+/* Barra de progreso animada */
+@keyframes progress-pulse {
+    0% {
+        width: 20%;
+        background: linear-gradient(90deg, #3B82F6, #60A5FA);
+    }
+    25% {
+        width: 40%;
+        background: linear-gradient(90deg, #60A5FA, #93C5FD);
+    }
+    50% {
+        width: 70%;
+        background: linear-gradient(90deg, #93C5FD, #DBEAFE);
+    }
+    75% {
+        width: 90%;
+        background: linear-gradient(90deg, #DBEAFE, #60A5FA);
+    }
+    100% {
+        width: 95%;
+        background: linear-gradient(90deg, #60A5FA, #3B82F6);
+    }
+}
+
+.progress-bar {
+    animation: progress-pulse 3s ease-in-out infinite;
+}
+
+/* Animación de spin mejorada */
+@keyframes spin {
+    from { 
+        transform: rotate(0deg); 
+    }
+    to { 
+        transform: rotate(360deg); 
+    }
+}
+
+/* Efecto de shimmer mejorado */
+@keyframes shimmer {
+    0% {
+        background-position: -200px 0;
+        opacity: 0.8;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        background-position: calc(200px + 100%) 0;
+        opacity: 0.8;
+    }
+}
+
+.shimmer {
+    background: linear-gradient(90deg, #374151 0px, #4B5563 40px, #6B7280 50px, #4B5563 60px, #374151 100px);
+    background-size: 300px;
+    animation: shimmer 2s infinite ease-in-out;
+}
+
+/* Contenedor para fallback con altura fija */
+.fallback-container {
+    min-height: 384px;
+    background: linear-gradient(135deg, #374151, #4B5563);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Estilos para fallback de imágenes */
+.image-fallback {
+    background: linear-gradient(135deg, #1f2937, #374151);
+    border: 2px dashed #6B7280;
+    min-height: 384px;
+}
+
+/* Contenedor de video con altura mínima */
+.video-container {
+    position: relative;
+    background: #000;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    min-height: 384px;
+}
+
+/* Efecto de fade-in mejorado para imágenes */
+.image-fade-in {
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+}
+
+.image-fade-in.loaded {
+    opacity: 1;
+}
+
+/* Estilos mejorados para la información de APOD */
+.apod-info-card {
+    background: linear-gradient(135deg, #374151, #4B5563);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive: ajustar altura en móviles */
+@media (max-width: 768px) {
+    .apod-image-container,
+    .apod-loading-container,
+    .fallback-container,
+    .video-container {
+        min-height: 256px; /* Reducir altura en móviles */
+    }
+    
+    .apod-loading-spinner {
+        width: 2rem;
+        height: 2rem;
+    }
+}
+
+/* Asegurar que el grid de APOD funcione correctamente */
+.apod-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+    .apod-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* Mejoras para la carga de video */
+.video-container iframe {
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* Indicadores de estado de conexión */
+.connection-status {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.connection-status.online {
+    background: #059669;
+    color: white;
+}
+
+.connection-status.offline {
+    background: #DC2626;
+    color: white;
+    animation: pulse 2s infinite;
+}
+
+/* Mejoras para dispositivos táctiles */
+@media (hover: none) and (pointer: coarse) {
+    button:hover {
+        transform: none;
+    }
+    
+    .hover\:scale-105:hover {
+        transform: none;
+    }
+    
+    button:active {
+        transform: scale(0.95);
+    }
+}
+
+/* Estilos para modal de pantalla completa */
+.fullscreen-modal {
+    backdrop-filter: blur(2px);
+}
+
+.fullscreen-modal img {
+    max-height: 80vh !important;
+    max-width: 90vw !important;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* Responsive para modal en móviles */
+@media (max-width: 768px) {
+    .fullscreen-modal img {
+        max-height: 70vh !important;
+        max-width: 95vw !important;
+    }
+    
+    .fullscreen-modal .modal-info {
+        max-width: 90vw;
+        padding: 1rem;
+    }
+}
