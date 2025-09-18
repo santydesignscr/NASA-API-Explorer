@@ -45,7 +45,7 @@ Una aplicación web interactiva que consume múltiples APIs de la NASA para expl
 
 ## 🚀 Demo en Vivo
 
-[🌐 Ver Demo](https://tu-usuario.github.io/nasa-api-explorer)
+[🌐 Ver Demo](https://santydesignscr.github.io/NASA-API-Explorer/)
 
 ## 📱 Capturas de Pantalla
 
